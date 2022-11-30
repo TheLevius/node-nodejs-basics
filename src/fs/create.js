@@ -4,22 +4,20 @@ import {
 import {
 	existsSync
 } from 'node:fs';
-import * as url from 'url';
 
 const create = async () => {
 
-	const __dirname = url.fileURLToPath(new URL('./files/',
-		import.meta.url));
+	const dirPath = './files/';
 
-	const absolutePathFilename = __dirname + 'fresh.txt'
+	const filePathName = dirPath + 'fresh.txt'
 
 	try {
 
-		if (existsSync(absolutePathFilename)) {
+		if (existsSync(filePathName)) {
 			throw new Error('FS operation failed');
 		}
 
-		await writeFile(absolutePathFilename, 'I am fresh and young');
+		await writeFile(filePathName, 'I am fresh and young');
 
 	} catch (err) {
 

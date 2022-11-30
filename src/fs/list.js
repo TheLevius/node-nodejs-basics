@@ -1,4 +1,3 @@
-import * as url from 'url'
 import {
 	readdir
 } from 'fs/promises';
@@ -7,16 +6,16 @@ import {
 } from 'node:fs';
 
 const list = async () => {
-	const listUrl = url.fileURLToPath(new URL('./files',
-		import.meta.url))
+
+	const listPath = './files';
 
 	try {
 
-		if (!existsSync(listUrl)) {
+		if (!existsSync(listPath)) {
 			throw new Error('FS operation failed');
 		}
 
-		const files = await readdir(listUrl);
+		const files = await readdir(listPath);
 		files.forEach((file) => console.log(file))
 
 	} catch (err) {

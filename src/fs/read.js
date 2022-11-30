@@ -1,4 +1,3 @@
-import * as url from 'url'
 import {
 	readFile
 } from 'fs/promises';
@@ -8,16 +7,15 @@ import {
 
 const read = async () => {
 
-	const fileUrl = url.fileURLToPath(new URL('./files/fileToRead.txt',
-		import.meta.url))
+	const filePath = './files/fileToRead.txt'
 
 	try {
 
-		if (!existsSync(fileUrl)) {
+		if (!existsSync(filePath)) {
 			throw new Error('FS operation failed');
 		}
 
-		const data = await readFile(fileUrl, {
+		const data = await readFile(filePath, {
 			encoding: 'utf8'
 		});
 		console.log(data)
