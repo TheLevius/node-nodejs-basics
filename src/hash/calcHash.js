@@ -1,5 +1,21 @@
+import {
+	createHash
+} from 'node:crypto'
+import {
+	readFile
+} from 'node:fs/promises';
+
 const calculateHash = async () => {
-    // Write your code here 
+
+	const data = await readFile('./files/fileToCalculateHashFor.txt', {
+		encoding: 'utf8'
+	});
+	const hashSum = createHash('sha256');
+	hashSum.update(data);
+	const hex = hashSum.digest('hex');
+
+	console.log(hex);
+
 };
 
 await calculateHash();
