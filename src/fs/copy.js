@@ -1,29 +1,23 @@
 import {
 	cp
 } from 'node:fs/promises';
-import {
-	existsSync
-} from 'node:fs';
 
 const copy = async () => {
 
-	const srcPath = './files';
-	const distPath = './files_copy';
+	const src = './files';
+	const dest = './files_copy';
 
 	try {
-
-		if (!existsSync(srcPath) || existsSync(distPath)) {
+		await cp(src, dest, {
+			recursive: true,
+			errorOnExist: true,
+			force: false
+		});
+	} catch (err) {
+		if (err.code === 'ERR_FS_CP_EEXIST') {
 			throw new Error('FS operation failed');
 		}
-
-		await cp(srcPath, distPath, {
-			recursive: true
-		})
-
-	} catch (err) {
-
-		console.error(err)
-
+		console.error(err);
 	}
 
 };

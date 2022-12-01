@@ -1,21 +1,25 @@
 import {
-	rename as mv
-} from 'fs/promises';
-import {
 	existsSync
-} from 'node:fs';
+} from 'fs';
+import {
+	rename as mv,
+} from 'fs/promises';
 
 const rename = async () => {
 
-	const oldPathName = './files/wrongFilename.txt';
-	const newPathName = './files/properFilename.md';
+	const oldPath = './files/wrongFilename.txt';
+	const newPath = './files/properFilename.md';
+
+	if (existsSync(newPath)) {
+		throw new Error('FS operation failed')
+	}
 
 	try {
-		if (!existsSync(oldPathName) || existsSync(newPathName)) {
+		await mv(oldPath, newPath)
+	} catch (err) {
+		if (err.code === 'ENOENT') {
 			throw new Error('FS operation failed');
 		}
-		await mv(oldPathName, newPathName)
-	} catch (err) {
 		console.error(err)
 	}
 };

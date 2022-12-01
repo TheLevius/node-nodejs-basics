@@ -1,28 +1,22 @@
 import {
 	writeFile
 } from 'node:fs/promises';
-import {
-	existsSync
-} from 'node:fs';
 
 const create = async () => {
 
 	const dirPath = './files/';
-
-	const filePathName = dirPath + 'fresh.txt'
+	const filePathName = dirPath + 'fresh.txt';
+	const content = 'I am fresh and young';
 
 	try {
-
-		if (existsSync(filePathName)) {
-			throw new Error('FS operation failed');
-		}
-
-		await writeFile(filePathName, 'I am fresh and young');
-
+		await writeFile(filePathName, content, {
+			flag: 'wx'
+		});
 	} catch (err) {
-
+		if (err.code === 'EEXIST') {
+			throw new Error('FS operation failed')
+		}
 		console.error(err);
-
 	}
 };
 
