@@ -1,10 +1,16 @@
 import {
 	readdir
 } from 'fs/promises';
+import {
+	defineAbsPath
+} from '../utils/define_abs_path.js';
 
 const list = async () => {
 
-	const src = './files';
+	const getPath = defineAbsPath(
+		import.meta.url);
+
+	const src = getPath('/', 'files');
 
 	try {
 		const files = await readdir(src);

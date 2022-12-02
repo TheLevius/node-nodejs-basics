@@ -1,10 +1,16 @@
 import {
 	readFile
 } from 'fs/promises';
+import {
+	defineAbsPath
+} from '../utils/define_abs_path.js';
 
 const read = async () => {
 
-	const filePath = './files/fileToRead.txt'
+	const getPath = defineAbsPath(
+		import.meta.url);
+
+	const filePath = getPath('fileToRead.txt', 'files');
 
 	try {
 		const data = await readFile(filePath, {

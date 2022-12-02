@@ -4,11 +4,17 @@ import {
 import {
 	rename as mv,
 } from 'fs/promises';
+import {
+	defineAbsPath
+} from '../utils/define_abs_path.js';
 
 const rename = async () => {
 
-	const oldPath = './files/wrongFilename.txt';
-	const newPath = './files/properFilename.md';
+	const getPath = defineAbsPath(
+		import.meta.url);
+
+	const oldPath = getPath('wrongFilename.txt', 'files');
+	const newPath = getPath('properFilename.md', 'files');
 
 	if (existsSync(newPath)) {
 		throw new Error('FS operation failed')

@@ -1,10 +1,16 @@
 import {
 	rm
 } from 'fs/promises';
+import {
+	defineAbsPath
+} from '../utils/define_abs_path.js';
 
 const remove = async () => {
 
-	const fileToRemove = './files/fileToRemove.txt';
+	const getPath = defineAbsPath(
+		import.meta.url);
+
+	const fileToRemove = getPath('fileToRemove.txt', 'files');
 
 	try {
 		await rm(fileToRemove);
