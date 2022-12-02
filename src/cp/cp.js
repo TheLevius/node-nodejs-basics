@@ -1,17 +1,26 @@
 import {
 	spawn
 } from 'node:child_process';
+import {
+	defineAbsPath
+} from '../utils/define_abs_path.js';
 
 const spawnChildProcess = async (args = []) => {
-	const childProcess = spawn('node', ['./files/script.js', ...args]);
+
+	const getPath = defineAbsPath(
+		import.meta.url);
+
+	const processPath = getPath('script.js', 'files');
+
+	const childProcess = spawn('node', [processPath, ...args]);
 
 	process.stdin.on('data', (msg) => {
-		childProcess.stdin.write(msg)
-	})
+		childProcess.stdin.write(msg);
+	});
 
 	childProcess.stdout.on('data', (data) => {
 		console.log(data.toString());
-	})
+	});
 
 };
 

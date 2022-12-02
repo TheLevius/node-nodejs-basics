@@ -4,22 +4,30 @@ import {
 import {
 	cpus
 } from 'node:os';
+import {
+	defineAbsPath
+} from '../utils/define_abs_path.js';
 
 const performCalculations = async () => {
+
+	const getPath = defineAbsPath(
+		import.meta.url);
+
+	const workerPath = getPath('worker.js');
 	const cores = cpus();
 	let num = 10;
 
 	const workers = cores.map(() => {
 		return new Promise((res, rej) => {
-			const worker = new Worker('./worker', {
+			const worker = new Worker(workerPath, {
 				workerData: num++
-			})
-			worker.on('message', (msg) => res(msg))
-			worker.on('error', (msg) => rej(msg))
+			});
+			worker.on('message', (msg) => res(msg));
+			worker.on('error', (msg) => rej(msg));
 		})
 	})
 
-	const calcResults = await Promise.allSettled(workers)
+	const calcResults = await Promise.allSettled(workers);
 
 	const parsedResults = calcResults.map(({
 		status,
@@ -30,8 +38,8 @@ const performCalculations = async () => {
 	} : {
 		status: 'error',
 		data: null
-	})
-	console.log(parsedResults)
+	});
+	console.log(parsedResults);
 };
 
 await performCalculations();

@@ -11,7 +11,7 @@ const transform = async () => {
 			const reversedData = chunkStringified.split('').reverse().join('');
 			cb(null, reversedData + '\n')
 		}
-	})
+	});
 
 	pipeline(
 		process.stdin,
@@ -20,7 +20,7 @@ const transform = async () => {
 		(err) => {
 			console.error(`Error: ${err}`);
 		}
-	)
+	);
 };
 
 await transform();
