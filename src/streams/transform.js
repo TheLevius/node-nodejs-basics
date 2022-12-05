@@ -9,7 +9,7 @@ const transform = async () => {
 		transform(chunk, enc, cb) {
 			const chunkStringified = chunk.toString().trim();
 			const reversedData = chunkStringified.split('').reverse().join('');
-			cb(null, reversedData + '\n')
+			cb(null, reversedData + '\n');
 		}
 	});
 

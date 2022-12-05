@@ -1,4 +1,6 @@
-import path from 'path';
+import path, {
+	dirname
+} from 'path';
 import {
 	release,
 	version
@@ -6,13 +8,14 @@ import {
 import {
 	createServer as createServerHttp
 } from 'node:http';
-import * as url from 'url';
-await import('./files/c.js');
+import {
+	fileURLToPath
+} from 'url';
+import './files/c.js';
 
-const __filename = url.fileURLToPath(
+const __filename = fileURLToPath(
 	import.meta.url);
-const __dirname = url.fileURLToPath(new URL('.',
-	import.meta.url));
+const __dirname = dirname(__filename);
 const random = Math.random();
 
 let unknownObject;
