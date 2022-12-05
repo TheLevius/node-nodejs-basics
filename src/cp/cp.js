@@ -24,4 +24,5 @@ const spawnChildProcess = async (args = []) => {
 
 };
 
-spawnChildProcess();
+// Put your arguments in function call to test this functionality
+spawnChildProcess( /* [someArgument1, someArgument2, ...] */ );
